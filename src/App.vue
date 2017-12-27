@@ -1,5 +1,5 @@
 <template>
-  <v-app id="app">
+  <v-app id="app" accent>
     <v-toolbar color="indigo" dark fixed app>
       <v-toolbar-title>Weather App</v-toolbar-title>
           <router-link xs6 v-bind:to="'/'"><v-btn flat>Home</v-btn> </router-link>
@@ -22,14 +22,7 @@
 </template>
 <script>
 export default {
-  name: 'app',
-  data () {
-      return {
-        drawer: null,
-      }},
-  mounted: function () {
-   
-  }
+  name: 'app'
 }
 </script>
 <<style>

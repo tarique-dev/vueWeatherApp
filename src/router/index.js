@@ -17,15 +17,14 @@ export default new Router({
       path: '/cities',
       name: 'Cities',
       component: Cities,
-      children:[
+      children: [
         {
           path: ':city',
           name: 'City',
           component: City
         }
       ]
-    },
-    
+    }
   ],
-  mode:'history'
+  mode: 'history'
 })

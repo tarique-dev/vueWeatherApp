@@ -13,32 +13,30 @@
               bottom
               autocomplete
             ></v-select>
-            
-          </v-flex>
-       
-   <router-view></router-view>
+           </v-flex>
+    <router-view></router-view>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 export default {
-  name: "cities",
-  data() {
+  name: 'cities',
+  data () {
     return {
       current_city: this.$route.params.city
-    };
-  },
-  methods: {
-    onChange(current_city) {
-      this.getWeatherReport(current_city);
-      this.$router.push("/cities/" + current_city);
-    },
-    getWeatherReport: function(city_name) {
-      this.$store.dispatch("GET_CURRENT_WEATHER", city_name);
     }
   },
-  computed: mapState(["AllSelectedCities"])
-};
+  methods: {
+    onChange (currentCity) {
+      this.getWeatherReport(currentCity)
+      this.$router.push('/cities/' + currentCity)
+    },
+    getWeatherReport: function (cityName) {
+      this.$store.dispatch('GET_CURRENT_WEATHER', cityName)
+    }
+  },
+  computed: mapState(['AllSelectedCities'])
+}
 </script>
 <!-- styling for the component -->
 <style>

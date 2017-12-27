@@ -32,31 +32,30 @@
   </v-layout>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 export default {
-  name: "city",
+  name: 'city',
   data: () => ({}),
   computed: mapState({
     weather: state => state.currentWeatherReport
   }),
   methods: {
-    toggleWeatherDetail: function(index) {
-      this.$store.dispatch("TOGGLE_DESC", index);
-     setTimeout(()=>{
-        window.scrollTo(0,document.body.scrollHeight);
-     })
+    toggleWeatherDetail: function (index) {
+      this.$store.dispatch('TOGGLE_DESC', index)
+      setTimeout(() => {
+        window.scrollTo(0, document.body.scrollHeight)
+      })
     }
   }
-};
+}
 </script>
 <style>
-
 .card__media__background {
- background-size:contain !important;
+  background-size: contain !important;
 }
-.extraDesc{
-    margin-left: 12px;
-    font-weight: 500;
-    font-size: large;
+.extraDesc {
+  margin-left: 12px;
+  font-weight: 500;
+  font-size: large;
 }
 </style>
