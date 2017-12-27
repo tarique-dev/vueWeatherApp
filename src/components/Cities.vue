@@ -1,75 +1,64 @@
 <template >
   <div id="cities">
-   <v-layout>
-    <v-flex>
-      <v-card>
-        <v-toolbar color="cyan" dark>
-          
-          <v-toolbar-title>Current Selections</v-toolbar-title>
-          <v-spacer></v-spacer>
-          
-        </v-toolbar>
-        <v-list two-line>
-          <template v-for="(currentCity,index) in AllSelectedCities" >
-          
-            <v-list-tile avatar  v-bind:key="index" @click="getWeatherReport(currentCity)">
-              <v-list-tile-content>
-              <router-link v-bind:to="'/cities/'+currentCity"><v-list-tile-title v-html="currentCity"></v-list-tile-title> </router-link>
-                <!-- <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title> -->
-              </v-list-tile-content>
-            </v-list-tile>
-          </template>
-        </v-list>
-      </v-card>
-    </v-flex>
-  </v-layout>
-    <!-- <ul>
-
-     <li v-for="(currentCity,index) in AllSelectedCities" :key="index" @click="getWeatherReport(currentCity)"> <router-link v-bind:to="'/cities/'+currentCity">{{currentCity}}</router-link></li>
-    </ul> -->
-    <router-view></router-view>
+     <v-card-text>
+    <p style="position:absolute;right: 20%;" class="display-3 ">{{$route.params.city}}</p>
+     </v-card-text>
+      <v-flex xs6>
+            <v-select
+              v-bind:items="AllSelectedCities"
+              v-model="current_city"
+              label="Select"
+              single-line
+              v-on:change="onChange"
+              bottom
+              autocomplete
+            ></v-select>
+            
+          </v-flex>
+       
+   <router-view></router-view>
   </div>
 </template>
-
 <script>
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 export default {
-  name: 'cities',
- data() {
+  name: "cities",
+  data() {
     return {
-      msg: "This is city page",
-     
+      current_city: this.$route.params.city
     };
   },
-  methods:{
-    getWeatherReport:function(city_name){
-      this.$store.dispatch('GET_CURRENT_WEATHER',city_name);
+  methods: {
+    onChange(current_city) {
+      this.getWeatherReport(current_city);
+      this.$router.push("/cities/" + current_city);
+    },
+    getWeatherReport: function(city_name) {
+      this.$store.dispatch("GET_CURRENT_WEATHER", city_name);
     }
   },
-  computed:mapState([
-    'AllSelectedCities'
-  ]),
-}
+  computed: mapState(["AllSelectedCities"])
+};
 </script>
 <!-- styling for the component -->
 <style>
 #about {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
-.card ul{
+.card ul {
   max-height: 200px;
   overflow: auto;
 }
-#cities{
-  width:100%;
+#cities {
+  width: 100%;
 }
-a{
+a {
   color: #000 !important;
-    text-decoration: none !important;
+  text-decoration: none !important;
 }
 </style>

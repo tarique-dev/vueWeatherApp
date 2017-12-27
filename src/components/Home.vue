@@ -1,9 +1,8 @@
 <template>
 <div class="home">
     <h1>{{ msg }}</h1> <ul>
-      
       <li v-for="(currentCity,index) in AllSelectedCities" :key="index"><div class="text-xs-center">
-          <v-chip close  @click="deleteFromList(currentCity)">{{currentCity}}</v-chip>
+          <v-chip close  @input="deleteFromList(currentCity)" @click="showWeatherReport(currentCity)">{{currentCity}}</v-chip>
         </div></li>
     </ul>
       <v-form>
@@ -13,7 +12,7 @@
               v-model="my_city"
               label="City"
               autocomplete
-            ></v-select>
+             ></v-select>
           </v-flex>
    </v-form>
       <v-btn  color="primary" @click="addToList" dark>Add City</v-btn>
@@ -27,21 +26,22 @@ import { mapState } from "vuex";
 export default {
   name: "Home",
   data() {
-   return {
+    return {
       msg: "Select your city of interest",
       cities: cities,
-      my_city:''
+      my_city: ""
     };
-    
-   
   },
   computed: mapState(["AllSelectedCities"]),
   created: function() {},
   methods: {
+    showWeatherReport(current_city){
+       this.$store.dispatch("GET_CURRENT_WEATHER", current_city);
+           this.$router.push("/cities/" + current_city);
+    },
     addToList: function() {
       this.$store.dispatch("ADD_CITY", { city: this.my_city });
-      this.my_city='';
-   
+      this.my_city = "";
     },
     deleteFromList: function(cityToBeDeleted) {
       this.$store.dispatch("REMOVE_CITY", { city: cityToBeDeleted });
@@ -49,7 +49,6 @@ export default {
   }
 };
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1,
@@ -67,4 +66,5 @@ li {
 a {
   color: #42b983;
 }
+
 </style>
