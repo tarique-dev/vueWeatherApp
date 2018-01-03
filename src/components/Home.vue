@@ -6,7 +6,7 @@
     <h1>{{ msg }}</h1> <ul><br>
       <li v-for="(currentCity,index) in AllSelectedCities" :key="index"><div class="text-xs-center">
           <v-chip close color="green" text-color="white" @input="deleteFromList(currentCity)" @click="showWeatherReport(currentCity)">
-      <v-icon small color="white">visibility</v-icon>
+      <v-icon small color="#0000008a">visibility</v-icon>
      {{currentCity}}</v-chip>
         </div></li>
     </ul>
@@ -16,11 +16,12 @@
               v-bind:items="cities"
               v-model="my_city"
               label="City"
+              v-on:change="onChange"
               autocomplete
              ></v-select>
           </v-flex>
    </v-form>
-      <v-btn  color="primary" @click="addToList" dark>Add City</v-btn>
+      <v-btn  color="primary" @click="addToList" dark :disabled="newValue" ripple>Add City</v-btn>
  </div>
 
 </template>
@@ -35,7 +36,8 @@ export default {
       msg: 'Select your cities of interest',
       alert:false,
       cities: cities,
-      my_city: ''
+      my_city: '',
+      newValue:true
     }
   },
   computed: mapState(['AllSelectedCities']),
@@ -44,10 +46,21 @@ export default {
       this.$store.dispatch('GET_CURRENT_WEATHER', currentCity)
       this.$router.push('/cities/' + currentCity)
     },
+    onChange(){
+  if(this.alert){
+        this.alert=!this.alert
+       
+      }
+       this.newValue=false
+    },
     addToList: function () {
+      if(this.alert){
+        this.alert=!this.alert;
+      }
       if (this.$store.state.AllSelectedCities.indexOf(this.my_city)<0){
       this.$store.dispatch('ADD_CITY', { city: this.my_city })
       this.my_city = '';
+          this.newValue=true;
       }
 else{
   this.alert=!this.alert;
