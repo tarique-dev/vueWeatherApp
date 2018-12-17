@@ -43,7 +43,7 @@ export default {
     toggleWeatherDetail: function (index) {
       this.$store.dispatch('TOGGLE_DESC', index)
       setTimeout(() => {
-        window.scrollTo(0, document.body.scrollHeight)
+        window.scrollTo(0, document.body.scrollHeight) // SAMPLE COMMENT
       })
     }
   }
